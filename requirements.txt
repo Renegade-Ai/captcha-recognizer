@@ -1,0 +1,8 @@
+captcha
+pandas
+matplotlib
+numpy
+torch
+scikit-learn
+albumentations
+tqdm
