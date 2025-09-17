@@ -6,7 +6,7 @@ from captcha.image import ImageCaptcha
 
 import config
 
-NUM_OF_IMAGES = 30000
+NUM_OF_IMAGES = 30
 
 # create a new directory input, dont do anything if already exists
 os.makedirs("input", exist_ok=True)

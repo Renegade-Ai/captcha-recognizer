@@ -340,9 +340,10 @@ class CaptchaModel(nn.Module):
                 dtype=torch.int32,
             )
 
-            print("Log probs shape", log_probs.shape)
-            print("Input lengths shape", input_lengths.shape)
-            print("Target lengths shape", target_lengths.shape)
+            # Debug prints commented out to fix progress bar display
+            # print("Log probs shape", log_probs.shape)
+            # print("Input lengths shape", input_lengths.shape)
+            # print("Target lengths shape", target_lengths.shape)
 
             loss = nn.CTCLoss(blank=0)(
                 log_probs,  # Model predictions (300, bs, num_chars+1)
@@ -351,7 +352,7 @@ class CaptchaModel(nn.Module):
                 target_lengths,  # Length of each target sequence (bs,)
             )
 
-            print("Loss calculations complete")
+            # print("Loss calculations complete")
 
             return x, loss
 
