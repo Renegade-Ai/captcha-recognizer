@@ -1,6 +1,6 @@
 import torch
 
-EPOCHS = 1
+EPOCHS = 11
 IMAGE_DIR = "input"
 RANDOM_STATE = 7
 IMAGE_HEIGHT = 75

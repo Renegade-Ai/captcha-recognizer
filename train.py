@@ -13,6 +13,7 @@ import config
 import dataset
 import engine
 import model
+from matplotlib_logger import MatplotlibLogger
 from model import CaptchaModel
 
 
@@ -282,6 +283,10 @@ def run_training():
     logger.info(f"Training session started - ID: {timestamp}")
     logger.info(f"Log file: {log_filename}")
 
+    # Initialize Matplotlib logging
+    plot_logger = MatplotlibLogger(experiment_name=f"captcha_training_{timestamp}")
+    logger.info(f"Matplotlib plotting initialized")
+
     # ===== DATA LOADING AND PREPROCESSING =====
 
     image_paths = glob.glob(os.path.join(config.IMAGE_DIR, "*.png"))
@@ -436,6 +441,15 @@ def run_training():
         if new_lr != old_lr:
             logger.info(f"Learning rate reduced: {old_lr:.2e} → {new_lr:.2e}")
 
+        # Log metrics to Matplotlib plots
+        plot_logger.log_epoch_metrics(
+            epoch=epoch + 1,
+            train_loss=train_loss,
+            val_loss=test_loss,
+            learning_rate=current_lr,
+            accuracy=accuracy,
+        )
+
     logger.info("=" * 60)
     logger.info("🎉 TRAINING COMPLETED SUCCESSFULLY!")
     logger.info("=" * 60)
@@ -491,7 +505,11 @@ def run_training():
     logger.info(f"   • Log file: {log_filename}")
     logger.info("=" * 60)
 
-    print(f"\n🎉 Training completed! Check logs at: {log_filename}")
+    # Close Matplotlib logging and generate final plots
+    plot_logger.close()
+
+    print(f"\nTraining completed! Check logs at: {log_filename}")
+    print(f"View beautiful plots at: {plot_logger.save_path}")
 
 
 if __name__ == "__main__":
